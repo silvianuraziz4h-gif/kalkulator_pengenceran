@@ -192,5 +192,3 @@ try:
 
 except Exception as e:
     st.error(f"Terjadi kesalahan dalam perhitungan: {e}")
-
-st.caption("Dibuat secara kustom menggunakan Python & Streamlit.")
