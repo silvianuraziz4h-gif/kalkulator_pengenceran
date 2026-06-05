@@ -361,4 +361,247 @@ with M3:
         with col1:
             Cb = st.number_input("Konsentrasi C (M)", 1e-14, value=0.1, step=0.001, format="%.6f", key="bs_C")
         if jenis_b == "Basa Kuat":
-            st.markdown('<div class="formula-
+            st.markdown('<div class="formula-box">pOH = −log[OH⁻] &nbsp;|&nbsp; pH = 14 − pOH</div>', unsafe_allow_html=True)
+            pOH = -math.log10(max(Cb, 1e-14))
+            pH  = 14 - pOH
+            st.markdown(res("pH larutan", f'<span style="color:{ph_color(pH)}">{pH:.4f}</span>', "", "rc-amber"), unsafe_allow_html=True)
+            st.markdown(ph_bar(pH), unsafe_allow_html=True)
+            st.markdown(step(f"pOH={pOH:.4f}<br>pH=14−{pOH:.4f}=<b>{pH:.4f}</b>"), unsafe_allow_html=True)
+        else:
+            st.markdown('<div class="formula-box">B+H₂O ⇌ BH⁺+OH⁻ &nbsp;|&nbsp; [OH⁻] = √(Kb×C)</div>', unsafe_allow_html=True)
+            with col2:
+                Kb_b = st.number_input("Kb", 1e-20, value=1.8e-5, step=1e-7, format="%.2e", key="bs_Kb")
+            OH  = math.sqrt(Kb_b * Cb)
+            pOH = -math.log10(max(OH, 1e-14))
+            pH  = 14 - pOH
+            pKb = -math.log10(Kb_b)
+            st.markdown(res("pH larutan", f'<span style="color:{ph_color(pH)}">{pH:.4f}</span>', "", "rc-amber"), unsafe_allow_html=True)
+            st.markdown(ph_bar(pH), unsafe_allow_html=True)
+            st.markdown(step(f"Kb={Kb_b:.3e} | pKb={pKb:.4f}<br>[OH⁻]={OH:.4e} M | pOH={pOH:.4f}<br>pH=14−{pOH:.4f}=<b>{pH:.4f}</b>"), unsafe_allow_html=True)
+
+    with t3c:
+        st.markdown('<div class="formula-box">Ka = [H⁺]² / (C − [H⁺]) &nbsp;|&nbsp; Kb = [OH⁻]² / (C − [OH⁻])</div>', unsafe_allow_html=True)
+        jenis_k = st.radio("Cari:", ["Ka (dari asam lemah)","Kb (dari basa lemah)"], horizontal=True, key="kk_j")
+        col1, col2 = st.columns(2)
+        with col1:
+            Ck  = st.number_input("Konsentrasi C (M)", 1e-10, value=0.1, step=0.001, format="%.5f", key="kk_C")
+        with col2:
+            pHk = st.number_input("pH terukur", 0.0, 14.0, value=2.87, step=0.01, format="%.4f", key="kk_pH")
+        if jenis_k == "Ka (dari asam lemah)":
+            H = 10**(-pHk)
+            if Ck <= H:
+                st.error("[H⁺] tidak boleh ≥ C.")
+            else:
+                Ka_c  = H**2 / (Ck - H)
+                pKa_c = -math.log10(Ka_c)
+                st.markdown(res("Ka", f"{Ka_c:.4e}", f"(pKa = {pKa_c:.4f})", "rc-amber"), unsafe_allow_html=True)
+                st.markdown(step(f"[H⁺]=10^(−{pHk})={H:.4e} M<br>Ka=[H⁺]²/(C−[H⁺])={H**2:.4e}/({Ck}−{H:.4e})<br>Ka=<b>{Ka_c:.4e}</b> | pKa=<b>{pKa_c:.4f}</b>"), unsafe_allow_html=True)
+        else:
+            OH = 10**(-(14-pHk))
+            if Ck <= OH:
+                st.error("[OH⁻] tidak boleh ≥ C.")
+            else:
+                Kb_c  = OH**2 / (Ck - OH)
+                pKb_c = -math.log10(Kb_c)
+                st.markdown(res("Kb", f"{Kb_c:.4e}", f"(pKb = {pKb_c:.4f})", "rc-amber"), unsafe_allow_html=True)
+                st.markdown(step(f"pOH={14-pHk:.4f} | [OH⁻]={OH:.4e} M<br>Kb=<b>{Kb_c:.4e}</b> | pKb=<b>{pKb_c:.4f}</b>"), unsafe_allow_html=True)
+
+    with t3d:
+        st.markdown('<div class="formula-box">C₂ = C₁V₁/V₂ → hitung ulang pH dari C₂</div>', unsafe_allow_html=True)
+        jenis_d = st.radio("Jenis larutan:", ["Asam Kuat","Asam Lemah","Basa Kuat","Basa Lemah"], horizontal=True, key="dp_j")
+        kode_d  = {"Asam Kuat":"ak","Asam Lemah":"al","Basa Kuat":"bk","Basa Lemah":"bl"}[jenis_d]
+        col1, col2 = st.columns(2)
+        with col1:
+            C1d = st.number_input("C₁ — Konsentrasi awal (M)", 1e-14, value=0.1, step=0.001, format="%.6f", key="dp_C1")
+            V1d = st.number_input("V₁ — Volume awal (mL)",     0.001, value=10.0, step=0.1, format="%.3f", key="dp_V1")
+        with col2:
+            V2d = st.number_input("V₂ — Volume akhir (mL)", 0.001, value=100.0, step=1.0, format="%.3f", key="dp_V2")
+            Kd  = st.number_input("Ka / Kb (jika lemah)", 1e-20, value=1.8e-5, step=1e-7, format="%.2e", key="dp_K") if "Lemah" in jenis_d else None
+        C2d  = C1d * V1d / V2d
+        pH1  = calc_ph(kode_d, C1d, Kd)
+        pH2  = calc_ph(kode_d, C2d, Kd)
+        dpH  = pH2 - pH1
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown(res("pH awal", f'<span style="color:{ph_color(pH1)}">{pH1:.4f}</span>', "", "rc-amber"), unsafe_allow_html=True)
+            st.markdown(ph_bar(pH1), unsafe_allow_html=True)
+        with col2:
+            st.markdown(res("pH setelah pengenceran", f'<span style="color:{ph_color(pH2)}">{pH2:.4f}</span>', "", "rc-amber"), unsafe_allow_html=True)
+            st.markdown(ph_bar(pH2), unsafe_allow_html=True)
+        ket = "pH naik (lebih basa)" if dpH > 0 else ("pH turun (lebih asam)" if dpH < 0 else "pH tidak berubah")
+        st.markdown(step(f"C₂={C1d:.4e}×{V1d}/{V2d}=<b>{C2d:.4e} M</b><br>ΔpH={'+'if dpH>=0 else ''}{dpH:.4f} → {ket}"), unsafe_allow_html=True)
+
+# ==========================================
+# MODUL 4 — LARUTAN BUFFER
+# ==========================================
+with M4:
+    st.markdown("### 🧪 Pembuatan Larutan Buffer")
+    st.caption("Rancang larutan penyangga (buffer) berdasarkan nilai pH target memanfaatkan persamaan Henderson-Hasselbalch.")
+    
+    t4a, t4b, t4c = st.tabs(["🧮 Hitung pH Buffer", "⚖️ Hitung Rasio [A⁻]/[HA]", "📊 Kapasitas Buffer (β)"])
+
+    with t4a:
+        st.markdown('<div class="formula-box">pH = pKa + log([A⁻] / [HA])</div>', unsafe_allow_html=True)
+        col1, col2 = st.columns(2)
+        with col1:
+            pKa_b = st.number_input("pKa asam", 0.0, 14.0, value=4.74, step=0.01, format="%.4f", key="buf_pka")
+            ab    = st.number_input("[A⁻] — Konsentrasi basa konjugat (M)", 0.0001, value=0.1, step=0.001, format="%.5f", key="buf_ab")
+        with col2:
+            ha    = st.number_input("[HA] — Konsentrasi asam (M)", 0.0001, value=0.1, step=0.001, format="%.5f", key="buf_ha")
+        pH_buf = pKa_b + math.log10(ab / ha)
+        st.markdown(res("pH buffer", f'<span style="color:{ph_color(pH_buf)}">{pH_buf:.4f}</span>', "", "rc-purple"), unsafe_allow_html=True)
+        st.markdown(ph_bar(pH_buf), unsafe_allow_html=True)
+        st.markdown(step(f"pH = pKa + log([A⁻]/[HA])<br>pH = {pKa_b} + log({ab}/{ha})<br>pH = {pKa_b} + {math.log10(ab/ha):.4f} = <b>{pH_buf:.4f}</b>"), unsafe_allow_html=True)
+        st.info(f"Ka = {10**(-pKa_b):.4e} | Range efektif buffer: pH {pKa_b-1:.2f} – {pKa_b+1:.2f}")
+
+    with t4b:
+        st.markdown('<div class="formula-box">[A⁻]/[HA] = 10^(pH − pKa)</div>', unsafe_allow_html=True)
+        col1, col2 = st.columns(2)
+        with col1:
+            pHt   = st.number_input("pH target", 0.0, 14.0, value=5.0, step=0.01, format="%.4f", key="br_pH")
+            pKa_r = st.number_input("pKa asam",  0.0, 14.0, value=4.74, step=0.01, format="%.4f", key="br_pka")
+        with col2:
+            Ctot  = st.number_input("Konsentrasi buffer total (M)", 0.001, value=0.2, step=0.01, format="%.4f", key="br_tot")
+        ratio = 10**(pHt - pKa_r)
+        ab2   = Ctot * ratio / (1 + ratio)
+        ha2   = Ctot - ab2
+        st.markdown(res("Rasio [A⁻]/[HA]", f"{ratio:.5f}", "", "rc-purple"), unsafe_allow_html=True)
+        st.markdown(step(f"log([A⁻]/[HA]) = {pHt}−{pKa_r} = {pHt-pKa_r:.4f}<br>[A⁻]/[HA] = 10^{pHt-pKa_r:.4f} = <b>{ratio:.5f}</b><br>Dari {Ctot} M total:<br>&nbsp;&nbsp;[A⁻] = <b>{ab2:.5g} M</b><br>&nbsp;&nbsp;[HA] = <b>{ha2:.5g} M</b>"), unsafe_allow_html=True)
+
+    with t4c:
+        st.markdown('<div class="formula-box">β = 2.303 × C × Ka×[H⁺] / (Ka + [H⁺])²</div>', unsafe_allow_html=True)
+        col1, col2 = st.columns(2)
+        with col1:
+            Cbc   = st.number_input("Konsentrasi buffer total (M)", 0.0001, value=0.1, step=0.001, format="%.5f", key="bc_C")
+            Ka_bc = st.number_input("Ka", 1e-20, value=1.8e-5, step=1e-7, format="%.2e", key="bc_Ka")
+        with col2:
+            pH_bc = st.number_input("pH larutan", 0.0, 14.0, value=4.74, step=0.01, format="%.4f", key="bc_pH")
+        H_bc   = 10**(-pH_bc)
+        beta   = 2.303 * Cbc * (Ka_bc * H_bc) / (Ka_bc + H_bc)**2
+        pKa_bc = -math.log10(Ka_bc)
+        st.markdown(res("Kapasitas buffer (β)", f"{beta:.4e}", "mol/L/pH unit", "rc-purple"), unsafe_allow_html=True)
+        st.markdown(step(f"Ka={Ka_bc:.3e} | pKa={pKa_bc:.4f}<br>[H⁺]={H_bc:.4e}<br>β=2.303×{Cbc}×({Ka_bc:.3e}×{H_bc:.4e})/({Ka_bc:.3e}+{H_bc:.4e})²<br>β=<b>{beta:.4e} mol/L/pH</b>"), unsafe_allow_html=True)
+        st.info(f"β maksimum pada pH = pKa ({pKa_bc:.4f}). Range efektif: pH {pKa_bc-1:.2f} – {pKa_bc+1:.2f}")
+
+# ==========================================
+# MODUL 5 — GALAT & PROPAGASI ERROR
+# ==========================================
+with M5:
+    st.markdown("### ± Galat & Propagasi Error")
+    st.caption("Hitung statistik ketidakpastian galat absolut/relatif hasil lab dan kalkulasi propagasi error matematika.")
+    
+    t5a, t5b, t5c = st.tabs(["📏 Galat Absolut & Relatif", "⚡ Propagasi Error", "📊 Statistik (SD & RSD)"])
+
+    with t5a:
+        st.markdown('<div class="formula-box">Δx = |x_ukur − x_benar| &nbsp;|&nbsp; Galat relatif = (Δx / x_benar) × 100%</div>', unsafe_allow_html=True)
+        col1, col2 = st.columns(2)
+        with col1:
+            xu = st.number_input("Nilai terukur (x_ukur)",           value=9.87,  step=0.001, format="%.5f", key="ga_xu")
+            xb = st.number_input("Nilai benar / referensi (x_benar)", value=10.00, step=0.001, format="%.5f", key="ga_xb")
+        abs_e = abs(xu - xb)
+        rel_e = abs_e / abs(xb) * 100 if xb != 0 else 0.0
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown(res("Galat Absolut (Δx)", f"{abs_e:.5g}", "", "rc-coral"), unsafe_allow_html=True)
+        with col2:
+            st.markdown(res("Galat Relatif", f"{rel_e:.4f}", "%", "rc-coral"), unsafe_allow_html=True)
+        st.markdown(step(f"Δx = |{xu}−{xb}| = <b>{abs_e:.5g}</b><br>Galat relatif = ({abs_e:.5g}/{abs(xb)})×100 = <b>{rel_e:.4f}%</b>"), unsafe_allow_html=True)
+
+    with t5b:
+        st.markdown('<div class="formula-box">δ(x±y)=√(δx²+δy²) &nbsp;|&nbsp; δ(x×y)/f=√((δx/x)²+(δy/y)²) &nbsp;|&nbsp; δ(xⁿ)=|n|x^(n-1)δx</div>', unsafe_allow_html=True)
+        op = st.selectbox("Operasi:", [
+            "Penjumlahan / Pengurangan (x ± y)",
+            "Perkalian / Pembagian (x × y atau x/y)",
+            "Pemangkatan (xⁿ)",
+            "Logaritma natural ln(x)",
+            "Logaritma basis-10 log(x)"
+        ], key="pr_op")
+
+        y_val  = 0.0
+        dy_val = 0.0
+        n_val  = 2.0
+
+        col1, col2 = st.columns(2)
+        with col1:
+            x_val  = st.number_input("Nilai x",              value=10.0, step=0.001, format="%.5f", key="pr_x")
+            dx_val = st.number_input("Ketidakpastian δx", min_value=0.0, value=0.05, step=0.001, format="%.5f", key="pr_dx")
+        with col2:
+            if "±" in op or "×" in op:
+                y_val  = st.number_input("Nilai y",               value=5.0,  step=0.001, format="%.5f", key="pr_y")
+                dy_val = st.number_input("Ketidakpastian δy", min_value=0.0, value=0.03, step=0.001, format="%.5f", key="pr_dy")
+            elif "xⁿ" in op:
+                n_val  = st.number_input("Eksponen n", value=2.0, step=0.1, format="%.3f", key="pr_n")
+            else:
+                st.info("Hanya membutuhkan nilai x dan δx.")
+
+        if "±" in op:
+            f_val   = x_val + y_val
+            df_val  = math.sqrt(dx_val**2 + dy_val**2)
+            lbl_op  = "f = x + y"
+            steps_p = f"f = {x_val}+{y_val} = {f_val:.5g}<br>δf = √(δx²+δy²) = √({dx_val}²+{dy_val}²) = <b>{df_val:.5g}</b>"
+        elif "×" in op:
+            f_val   = x_val * y_val
+            rf      = math.sqrt((dx_val/x_val)**2 + (dy_val/y_val)**2) if (x_val != 0 and y_val != 0) else 0.0
+            df_val  = abs(f_val) * rf
+            lbl_op  = "f = x × y"
+            steps_p = f"f = {x_val}×{y_val} = {f_val:.5g}<br>δf/f = √((δx/x)²+(δy/y)²) = {rf:.5g}<br>δf = <b>{df_val:.5g}</b>"
+        elif "xⁿ" in op:
+            f_val   = x_val**n_val
+            df_val  = abs(n_val * x_val**(n_val - 1)) * dx_val if x_val != 0 else 0.0
+            lbl_op  = f"f = x^{n_val}"
+            steps_p = f"f = {x_val}^{n_val} = {f_val:.5g}<br>δf = |n·x^(n−1)|·δx = <b>{df_val:.5g}</b>"
+        elif "ln" in op:
+            f_val   = math.log(abs(x_val)) if x_val > 0 else float('nan')
+            df_val  = dx_val / abs(x_val)  if x_val != 0 else float('nan')
+            lbl_op  = "f = ln(x)"
+            steps_p = f"f = ln({x_val}) = {f_val:.5g}<br>δf = δx/x = {dx_val}/{x_val} = <b>{df_val:.5g}</b>"
+        else:
+            f_val   = math.log10(abs(x_val)) if x_val > 0 else float('nan')
+            df_val  = dx_val / (abs(x_val) * math.log(10)) if x_val != 0 else float('nan')
+            lbl_op  = "f = log(x)"
+            steps_p = f"f = log({x_val}) = {f_val:.5g}<br>δf = δx/(x·ln10) = {dx_val}/({x_val}×{math.log(10):.4f}) = <b>{df_val:.5g}</b>"
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown(res(f"Nilai {lbl_op}", f"{f_val:.5g}", "", "rc-coral"), unsafe_allow_html=True)
+        with col2:
+            st.markdown(res("Ketidakpastian δf", f"± {df_val:.4g}", "", "rc-coral"), unsafe_allow_html=True)
+        st.markdown(step(f"{steps_p}<br><br><b>Hasil: {f_val:.5g} ± {df_val:.4g}</b>"), unsafe_allow_html=True)
+
+    with t5c:
+        st.markdown('<div class="formula-box">x̄ = Σxᵢ/n &nbsp;|&nbsp; SD = √(Σ(xᵢ−x̄)²/(n−1)) &nbsp;|&nbsp; RSD = (SD/x̄)×100%</div>', unsafe_allow_html=True)
+        raw = st.text_area("Data pengukuran (pisahkan dengan koma atau baris baru):",
+                           value="9.87, 9.92, 9.85, 9.90, 9.88", height=100, key="stat_raw")
+        arr = []
+        for token in raw.replace('\n', ',').split(','):
+            t = token.strip()
+            if t:
+                try: arr.append(float(t))
+                except: pass
+        if len(arr) < 2:
+            st.warning("Masukkan minimal 2 data.")
+        else:
+            n_s    = len(arr)
+            mean_s = sum(arr) / n_s
+            var_s  = sum((xi - mean_s)**2 for xi in arr) / (n_s - 1)
+            sd_s   = math.sqrt(var_s)
+            rsd_s  = sd_s / abs(mean_s) * 100
+            se_s   = sd_s / math.sqrt(n_s)
+            ci95_s = 1.96 * se_s
+            col1, col2, col3, col4 = st.columns(4)
+            with col1: st.markdown(res("Rata-rata (x̄)",    f"{mean_s:.5g}", "",   "rc-coral"), unsafe_allow_html=True)
+            with col2: st.markdown(res("Std. Deviasi (SD)", f"{sd_s:.4g}",   "",   "rc-coral"), unsafe_allow_html=True)
+            with col3: st.markdown(res("RSD",               f"{rsd_s:.4f}",  "%",  "rc-coral"), unsafe_allow_html=True)
+            with col4: st.markdown(res("Std. Error (SE)",   f"{se_s:.4g}",   "",   "rc-coral"), unsafe_allow_html=True)
+            st.markdown(step(
+                f"n={n_s} | min={min(arr)} | max={max(arr)} | range={max(arr)-min(arr):.4g}<br>"
+                f"x̄=<b>{mean_s:.5g}</b> | SD=<b>{sd_s:.4g}</b> | RSD=<b>{rsd_s:.4f}%</b><br>"
+                f"SE=SD/√n={sd_s:.4g}/√{n_s}=<b>{se_s:.4g}</b><br>"
+                f"CI 95% ≈ x̄ ± 1.96×SE = {mean_s:.5g} ± {ci95_s:.4g}"
+            ), unsafe_allow_html=True)
+
+# ==========================================
+# FOOTER HALAMAN
+# ==========================================
+st.divider()
+st.markdown('<p style="text-align:center;font-size:12px;color:#b0b0b0">⚗️ Kalkulator Analisis Kuantitatif · Kimia Analitik</p>', unsafe_allow_html=True)
