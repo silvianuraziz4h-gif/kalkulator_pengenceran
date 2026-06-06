@@ -239,7 +239,7 @@ if st.session_state.menu_aktif == "Start":
         <div class="info-card info-card-manfaat">
             <h4>✨ Manfaat Aplikasi</h4>
             <ul>
-                <li><b>Cepat & Efisien:</b> Memproses rumus $C_1V_1 = C_2V_2$ dan hitungan stoikiometri dalam hitungan detik.</li>
+                <li><b>Cepat & Efisien:</b> Memproses rumus V1C1=V2C2 dan hitungan stoikiometri dalam hitungan detik.</li>
                 <li><b>Visual & Akurat:</b> Dilengkapi pelacakan rumus transparan serta alat hitung galat deviasi (SD/RSD).</li>
             </ul>
         </div>
