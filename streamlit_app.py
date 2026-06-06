@@ -19,66 +19,70 @@ def res(label, value, unit=""):
     return f"""
     <div class="result-card">
         <p class="result-label">{label}</p>
-        <p class="result-value">{value} <span style="font-size:16px; color:#4a4e69;">{unit}</span></p>
+        <p class="result-value">{value} <span style="font-size:16px; color:#00e5ff;">{unit}</span></p>
     </div>
     """
 
 # ==========================================
-# 3. GAYA CSS CUSTOM (TEMA REINBOW PASTEL CERIA)
+# 3. GAYA CSS CUSTOM (TEMA BIRU GELAP LABORATORIUM & ELEMEN KIMIA)
 # ==========================================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
 
-/* Mengubah background utama aplikasi menjadi Gradasi Pastel Warna-Warni */
+/* Mengubah background utama aplikasi menjadi Gelap Lab / Neon Sci-Fi */
 .stApp {
-    background: linear-gradient(135deg, #fef4f4 0%, #f1f7fe 35%, #f1fbf7 70%, #fffdf1 100%) !important;
-    background-image: radial-gradient(rgba(0,0,0,0.03) 2px, transparent 2px), 
-                      url('https://www.transparenttextures.com/patterns/hexabump.png');
-    background-size: 30px 30px, auto;
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%) !important;
+    background-attachment: fixed;
+    color: #ffffff !important;
 }
 
 html, body, [class*="css"] { 
     font-family: 'DM Sans', sans-serif; 
 }
 
+/* Memaksa semua teks input lab, markdown, dan tombol radio bawaan Streamlit berwarna putih */
+.stMarkdown, p, label, .stSlider, .stRadio, div[data-baseweb="checkbox"] {
+    color: #ffffff !important;
+}
+
 /* Badge di atas judul */
 .badge { 
     display:inline-block; font-family:'DM Mono',monospace; font-size:11px; font-weight:500;
-    letter-spacing:.08em; text-transform:uppercase; color:#ff758f; border:1px solid #ffb5a7;
-    border-radius:999px; padding:4px 14px; margin-bottom:1rem; background: #ffffff;
+    letter-spacing:.08em; text-transform:uppercase; color:#00e5ff; border:1px solid #00e5ff;
+    border-radius:999px; padding:4px 14px; margin-bottom:1rem; background: rgba(0, 229, 255, 0.1);
 }
 
 /* Judul Utama Dashboard */
 .main-title { 
-    font-family:'DM Serif Display',serif; font-size:42px; line-height:1.15; color:#4a4e69; margin:0 0 .5rem;
+    font-family:'DM Serif Display',serif; font-size:42px; line-height:1.15; color:#ffffff; margin:0 0 .5rem;
 }
 .main-title em { 
-    font-style:italic; color:#ff758f; 
+    font-style:italic; color:#00e5ff; 
 }
 .subtitle { 
-    font-size:15px; color:#6c757d; line-height:1.6; max-width:600px; margin-bottom:1.5rem; 
+    font-size:15px; color:#b0bec5; line-height:1.6; max-width:600px; margin-bottom:1.5rem; 
 }
 
 /* Kotak Rumus */
 .formula-box { 
-    background:#ffffff; border:1px solid #ffccd5; border-radius:10px; padding:12px 16px;
-    font-family:'DM Mono',monospace; font-size:13px; color:#ff758f; text-align:center; margin:1rem 0; 
+    background: rgba(255, 255, 255, 0.05); border:1px solid #00e5ff; border-radius:10px; padding:12px 16px;
+    font-family:'DM Mono',monospace; font-size:13px; color:#00e5ff; text-align:center; margin:1rem 0; 
 }
 
 /* STYLE HALAMAN PEMBUKA (START PAGE) */
 .welcome-outer {
     max-width: 750px;
     margin: 3rem auto 2rem;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(255,181,167,0.25);
+    box-shadow: 0 10px 25px rgba(0,229,255,0.15);
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
 .welcome-header {
-    background: linear-gradient(135deg, #ff758f, #ff7eb3, #fec89a);
+    background: linear-gradient(135deg, #00e5ff, #2c5364);
     padding: 2.5rem;
     text-align: center;
     color: white;
@@ -88,13 +92,13 @@ html, body, [class*="css"] {
     font-size: 40px;
     margin: 0;
     letter-spacing: 0.5px;
-    text-shadow: 1px 2px 4px rgba(0,0,0,0.1);
+    text-shadow: 1px 2px 4px rgba(0,0,0,0.3);
 }
 
 .welcome-body {
     padding: 2.5rem 2rem;
     text-align: center;
-    color: #4a4e69;
+    color: #ffffff;
 }
 .welcome-desc {
     font-size: 22px;
@@ -104,76 +108,107 @@ html, body, [class*="css"] {
     max-width: 600px;
 }
 
-/* Blok Info Tujuan & Manfaat Pastel */
+/* Blok Info Tujuan & Manfaat */
 .info-card {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 16px;
     padding: 1.5rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     height: 100%;
+    border: 1px solid rgba(255,255,255,0.05);
 }
-.info-card-tujuan { border-top: 5px solid #a8dadc; }
-.info-card-manfaat { border-top: 5px solid #fec89a; }
+.info-card-tujuan { border-top: 5px solid #00e5ff; }
+.info-card-manfaat { border-top: 5px solid #00e5ff; }
 
 .info-card h4 {
     margin-top: 0;
     font-size: 18px;
     margin-bottom: 0.75rem;
-    color: #4a4e69;
+    color: #00e5ff;
 }
 .info-card ul {
     margin: 0;
     padding-left: 1.2rem;
     font-size: 14px;
-    color: #6c757d;
+    color: #cfd8dc;
     line-height: 1.6;
 }
 
 /* Style untuk Kartu Menu Utama Dashboard */
 .menu-card {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     padding: 1.5rem;
     height: 200px;
     transition: all 0.2s ease;
+    border: 1px solid rgba(255,255,255,0.05);
 }
-.card-p1 { border-left: 5px solid #ffb5a7; }
-.card-p2 { border-left: 5px solid #fcd5ce; }
-.card-p3 { border-left: 5px solid #fec89a; }
-.card-p4 { border-left: 5px solid #d8f3dc; }
-.card-p5 { border-left: 5px solid #d8e2dc; }
+.card-p1 { border-left: 5px solid #00e5ff; }
+.card-p2 { border-left: 5px solid #00dbde; }
+.card-p3 { border-left: 5px solid #fc00ff; }
+.card-p4 { border-left: 5px solid #00ff87; }
+.card-p5 { border-left: 5px solid #ff007f; }
 
 .menu-card:hover {
-    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    box-shadow: 0 8px 20px rgba(0, 229, 255, 0.2);
     transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.08);
 }
 .menu-icon { font-size: 24px; margin-bottom: 0.5rem; }
-.menu-title { font-size: 18px; font-weight: 500; margin-top: 0.25rem; margin-bottom: 0.5rem; color: #4a4e69; }
-.menu-desc { font-size: 13px; color: #6c757d; line-height: 1.5; }
+.menu-title { font-size: 18px; font-weight: 500; margin-top: 0.25rem; margin-bottom: 0.5rem; color: #ffffff; }
+.menu-desc { font-size: 13px; color: #b0bec5; line-height: 1.5; }
 
-/* Custom Tombol agar berwarna Pastel Coral/Pink */
-div.stButton > button {
-    background: linear-gradient(135deg, #ff758f, #ff7eb3) !important;
+/* Custom Mengubah Box Input (Number, Text, Selectbox) bawaan Streamlit agar serasi dengan Tema Gelap */
+div[data-testid="stNumberInput"], div[data-testid="stSelectbox"], div[data-testid="stTextInput"], div[data-testid="stTextArea"] {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 8px !important;
     color: white !important;
+}
+input, select, textarea {
+    color: white !important;
+}
+
+/* Custom Tombol agar berwarna Cyber Cyan/Neon */
+div.stButton > button {
+    background: linear-gradient(135deg, #00e5ff, #00dbde) !important;
+    color: #0f2027 !important;
     border: none !important;
     border-radius: 25px !important;
     padding: 0.6rem 1.5rem !important;
-    font-weight: 500 !important;
-    box-shadow: 0 4px 10px rgba(255,117,143,0.3) !important;
+    font-weight: bold !important;
+    box-shadow: 0 4px 10px rgba(0, 229, 255, 0.3) !important;
     transition: all 0.2s;
 }
 div.stButton > button:hover {
     transform: scale(1.02);
-    box-shadow: 0 6px 15px rgba(255,117,143,0.4) !important;
+    box-shadow: 0 6px 15px rgba(0, 229, 255, 0.6) !important;
+    background: linear-gradient(135deg, #ffffff, #00e5ff) !important;
 }
 
 /* Style Kartu Hasil */
 .result-card { 
-    background:#ffffff; border-radius:12px; padding:1rem 1.4rem; margin-top:.75rem; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid #ffe5ec; 
+    background: rgba(255, 255, 255, 0.05); border-radius:12px; padding:1rem 1.4rem; margin-top:.75rem; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); border: 1px solid rgba(0, 229, 255, 0.2); 
 }
-.result-label { font-size:11px; font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:.07em; margin:0 0 4px; color: #9a8c98; }
-.result-value { font-size:26px; font-weight:500; margin:0; font-family:'DM Mono',monospace; color: #ff758f; }
+.result-label { font-size:11px; font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:.07em; margin:0 0 4px; color: #b0bec5; }
+.result-value { font-size:26px; font-weight:500; margin:0; font-family:'DM Mono',monospace; color: #00e5ff; }
+
+/* Menambahkan elemen rumus kimia dekoratif transparan melayang di background */
+.stApp::before {
+    content: "🧪  ⚗️  ⚛️  H₂O  CO₂  NaCl  M₁V₁=M₂V₂  pH=-log[H⁺]  🧫  NaOH  HCl";
+    position: fixed;
+    top: 15%;
+    left: 5%;
+    font-size: 4.5rem;
+    font-family: 'Courier New', monospace;
+    opacity: 0.03; /* Dibuat samar agar tulisan depan tetap terbaca jernih */
+    white-space: pre-wrap;
+    word-spacing: 50px;
+    line-height: 2.8;
+    pointer-events: none;
+    width: 90%;
+    z-index: 0;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -239,7 +274,7 @@ if st.session_state.menu_aktif == "Start":
         <div class="info-card info-card-manfaat">
             <h4>✨ Manfaat Aplikasi</h4>
             <ul>
-                <li><b>Cepat & Efisien:</b> Memproses rumus V1C1=V2C2 dan hitungan stoikiometri dalam hitungan detik.</li>
+                <li><b>Cepat & Efisien:</b> Memproses rumus $C_1V_1 = C_2V_2$ dan hitungan stoikiometri dalam hitungan detik.</li>
                 <li><b>Visual & Akurat:</b> Dilengkapi pelacakan rumus transparan serta alat hitung galat deviasi (SD/RSD).</li>
             </ul>
         </div>
@@ -341,8 +376,8 @@ else:
             if va_s >= vt_s: st.warning("Volume aliquot harus lebih kecil dari volume total.")
             else:
                 f = va_s / vt_s
-                rows = "".join(f"<tr><td style='padding:6px 10px'>{'Stok' if i==0 else f'Langkah {i}'}</td><td style='padding:6px 10px;font-family:DM Mono,monospace;color:#ff758f'>{c0*(f**i):.4e}</td><td style='padding:6px 10px;color:#666'>{sat_s}</td></tr>" for i in range(int(nstep)+1))
-                st.markdown(f"""<table style="width:100%;border-collapse:collapse;border:1px solid #ffe5ec;font-size:13px;margin-top:.5rem;background:#ffffff;border-radius:10px;overflow:hidden"><thead><tr style="background:#fff0f3"><th style="padding:8px 10px;text-align:left;color:#ff758f">Tabung</th><th style="padding:8px 10px;text-align:left;color:#ff758f">Konsentrasi</th><th style="padding:8px 10px;text-align:left;color:#ff758f">Satuan</th></tr></thead><tbody>{rows}</tbody></table>""", unsafe_allow_html=True)
+                rows = "".join(f"<tr><td style='padding:6px 10px; border-bottom:1px solid rgba(255,255,255,0.1)'>{'Stok' if i==0 else f'Langkah {i}'}</td><td style='padding:6px 10px;font-family:DM Mono,monospace;color:#00e5ff; border-bottom:1px solid rgba(255,255,255,0.1)'>{c0*(f**i):.4e}</td><td style='padding:6px 10px;color:#b0bec5; border-bottom:1px solid rgba(255,255,255,0.1)'>{sat_s}</td></tr>" for i in range(int(nstep)+1))
+                st.markdown(f"""<table style="width:100%;border-collapse:collapse;border:1px solid rgba(0,229,255,0.2);font-size:13px;margin-top:.5rem;background:rgba(255,255,255,0.05);border-radius:10px;overflow:hidden"><thead><tr style="background:rgba(0,229,255,0.1)"><th style="padding:8px 10px;text-align:left;color:#00e5ff">Tabung</th><th style="padding:8px 10px;text-align:left;color:#00e5ff">Konsentrasi</th><th style="padding:8px 10px;text-align:left;color:#00e5ff">Satuan</th></tr></thead><tbody>{rows}</tbody></table>""", unsafe_allow_html=True)
         with t1c:
             col1, col2 = st.columns(2)
             with col1:
@@ -499,4 +534,4 @@ else:
 # 6. FOOTER HALAMAN
 # ==========================================
 st.divider()
-st.markdown('<p style="text-align:center;font-size:12px;color:#a29bfe;font-weight:500;">⚗️ Kalkulator Analisis Kuantitatif · Kimia Analitik</p>', unsafe_allow_html=True)
+st.markdown('<p style="text-align:center;font-size:12px;color:#00e5ff;font-weight:500;">⚗️ Kalkulator Analisis Kuantitatif · Kimia Analitik</p>', unsafe_allow_html=True)
