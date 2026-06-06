@@ -9,16 +9,16 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. GAYA CSS CUSTOM (TEMA SAGE GREEN & COPPER)
+# 2. GAYA CSS CUSTOM (TEMA REINBOW PASTEL CERIA)
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
 
-/* Mengubah background utama aplikasi menjadi Sage Green */
+/* Mengubah background utama aplikasi menjadi Gradasi Pastel Warna-Warni */
 .stApp {
-    background-color: #93A899 !important;
+    background: linear-gradient(135deg, #fef4f4 0%, #f1f7fe 35%, #f1fbf7 70%, #fffdf1 100%) !important;
     /* Efek gambar latar belakang pola molekul samar */
-    background-image: radial-gradient(rgba(255,255,255,0.15) 2px, transparent 2px), 
+    background-image: radial-gradient(rgba(0,0,0,0.03) 2px, transparent 2px), 
                       url('https://www.transparenttextures.com/patterns/hexabump.png');
     background-size: 30px 30px, auto;
 }
@@ -30,26 +30,25 @@ html, body, [class*="css"] {
 /* Badge di atas judul */
 .badge { 
     display:inline-block; font-family:'DM Mono',monospace; font-size:11px; font-weight:500;
-    letter-spacing:.08em; text-transform:uppercase; color:#ffffff; border:1px solid #ffffff;
-    border-radius:999px; padding:4px 14px; margin-bottom:1rem; background: rgba(0,0,0,0.1);
+    letter-spacing:.08em; text-transform:uppercase; color:#ff758f; border:1px solid #ffb5a7;
+    border-radius:999px; padding:4px 14px; margin-bottom:1rem; background: #ffffff;
 }
 
 /* Judul Utama Dashboard */
 .main-title { 
-    font-family:'DM Serif Display',serif; font-size:42px; line-height:1.15; color:#ffffff; margin:0 0 .5rem;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    font-family:'DM Serif Display',serif; font-size:42px; line-height:1.15; color:#4a4e69; margin:0 0 .5rem;
 }
 .main-title em { 
-    font-style:italic; color:#FFE3D1; 
+    font-style:italic; color:#ff758f; 
 }
 .subtitle { 
-    font-size:15px; color:#f0f5f2; line-height:1.6; max-width:600px; margin-bottom:1.5rem; 
+    font-size:15px; color:#6c757d; line-height:1.6; max-width:600px; margin-bottom:1.5rem; 
 }
 
 /* Kotak Rumus */
 .formula-box { 
-    background:#ffffff; border:1px solid #e0e0e0; border-radius:10px; padding:12px 16px;
-    font-family:'DM Mono',monospace; font-size:13px; color:#bc6c25; text-align:center; margin:1rem 0; 
+    background:#ffffff; border:1px solid #ffccd5; border-radius:10px; padding:12px 16px;
+    font-family:'DM Mono',monospace; font-size:13px; color:#ff758f; text-align:center; margin:1rem 0; 
 }
 
 /* ==========================================
@@ -58,102 +57,110 @@ html, body, [class*="css"] {
 .welcome-outer {
     max-width: 750px;
     margin: 3rem auto 2rem;
-    background: #fdfbf7;
+    background: #ffffff;
     border-radius: 20px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 25px rgba(255,181,167,0.25);
     overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.6);
 }
 
-/* Bagian Atas Kotak Selamat Datang (Warna Copper/Tembaga) */
+/* Bagian Atas Kotak Selamat Datang (Gradasi Pink-Kuning Pastel Ceria) */
 .welcome-header {
-    background: linear-gradient(135deg, #c77d55, #b06239);
-    padding: 2rem;
+    background: linear-gradient(135deg, #ff758f, #ff7eb3, #fec89a);
+    padding: 2.5rem;
     text-align: center;
     color: white;
 }
 .welcome-header h1 {
     font-family: 'DM Serif Display', serif;
-    font-size: 38px;
+    font-size: 40px;
     margin: 0;
     letter-spacing: 0.5px;
+    text-shadow: 1px 2px 4px rgba(0,0,0,0.1);
 }
 
 /* Bagian Bawah Kotak Selamat Datang */
 .welcome-body {
     padding: 2.5rem 2rem;
     text-align: center;
-    color: #333333;
+    color: #4a4e69;
 }
 .welcome-desc {
     font-size: 22px;
-    font-weight: 400;
+    font-weight: 500;
     line-height: 1.5;
     margin: 0 auto;
     max-width: 600px;
 }
 
-/* Blok Info Tujuan & Manfaat di bagian bawah */
+/* Blok Info Tujuan & Manfaat Pastel */
 .info-card {
-    background: #fdfbf7;
+    background: #ffffff;
     border-radius: 16px;
     padding: 1.5rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
     height: 100%;
 }
+.info-card-tujuan { border-top: 5px solid #a8dadc; }
+.info-card-manfaat { border-top: 5px solid #fec89a; }
+
 .info-card h4 {
     margin-top: 0;
-    color: #b06239;
     font-size: 18px;
-    border-bottom: 2px solid #e9e5db;
-    padding-bottom: 0.5rem;
     margin-bottom: 0.75rem;
+    color: #4a4e69;
 }
 .info-card ul {
     margin: 0;
     padding-left: 1.2rem;
     font-size: 14px;
-    color: #444;
+    color: #6c757d;
     line-height: 1.6;
 }
 
 /* Style untuk Kartu Menu Utama Dashboard */
 .menu-card {
-    background: #fdfbf7;
-    border: 1px solid #e0dcd3;
+    background: #ffffff;
     border-radius: 12px;
     padding: 1.5rem;
     height: 200px;
     transition: all 0.2s ease;
 }
+.card-p1 { border-left: 5px solid #ffb5a7; }
+.card-p2 { border-left: 5px solid #fcd5ce; }
+.card-p3 { border-left: 5px solid #fec89a; }
+.card-p4 { border-left: 5px solid #d8f3dc; }
+.card-p5 { border-left: 5px solid #d8e2dc; }
+
 .menu-card:hover {
-    border-color: #b06239;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    transform: translateY(-3px);
 }
 .menu-icon { font-size: 24px; margin-bottom: 0.5rem; }
-.menu-num { font-family: 'DM Mono', monospace; font-size: 12px; color: #999; }
-.menu-title { font-size: 18px; font-weight: 500; margin-top: 0.25rem; margin-bottom: 0.5rem; color: #1a1a1a; }
-.menu-desc { font-size: 13px; color: #555; line-height: 1.5; }
+.menu-num { font-family: 'DM Mono', monospace; font-size: 12px; color: #adb5bd; }
+.menu-title { font-size: 18px; font-weight: 500; margin-top: 0.25rem; margin-bottom: 0.5rem; color: #4a4e69; }
+.menu-desc { font-size: 13px; color: #6c757d; line-height: 1.5; }
 
-/* Custom Tombol agar berwarna Copper */
+/* Custom Tombol agar berwarna Pastel Coral/Pink */
 div.stButton > button {
-    background-color: #c77d55 !important;
+    background: linear-gradient(135deg, #ff758f, #ff7eb3) !important;
     color: white !important;
     border: none !important;
-    border-radius: 8px !important;
-    padding: 0.5rem 1rem !important;
+    border-radius: 25px !important;
+    padding: 0.6rem 1.5rem !important;
     font-weight: 500 !important;
+    box-shadow: 0 4px 10px rgba(255,117,143,0.3) !important;
     transition: all 0.2s;
 }
 div.stButton > button:hover {
-    background-color: #b06239 !important;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
+    transform: scale(1.02);
+    box-shadow: 0 6px 15px rgba(255,117,143,0.4) !important;
 }
 
 /* Style Kartu Hasil */
-.result-card { background:#ffffff; border-left:5px solid #c77d55; border-radius:8px; padding:1rem 1.4rem; margin-top:.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-.result-label { font-size:11px; font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:.07em; margin:0 0 4px; color: #777; }
-.result-value { font-size:26px; font-weight:500; margin:0; font-family:'DM Mono',monospace; color: #b06239; }
+.result-card { background:#ffffff; border-radius:12px; padding:1rem 1.4rem; margin-top:.75rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid #ffe5ec; }
+.result-label { font-size:11px; font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:.07em; margin:0 0 4px; color: #9a8c98; }
+.result-value { font-size:26px; font-weight:500; margin:0; font-family:'DM Mono',monospace; color: #ff758f; }
 .step-box { background:#ffffff; border:1px solid #e0e0e0; border-radius:8px; padding:10px 14px; margin-top:8px; font-size:12.5px; color:#555; font-family:'DM Mono',monospace; line-height:1.9; }
 </style>
 """, unsafe_allow_html=True)
@@ -180,7 +187,7 @@ def from_mgL(mgL, sat, mr, rho=1.0):
 # HALAMAN ISI KONTEN
 # ==========================================
 
-# --- HALAMAN PEMBUKA (START PAGE BERWARNA SAGE-COPPER) ---
+# --- HALAMAN PEMBUKA (START PAGE BERWARNA RAINBOW PASTEL) ---
 if st.session_state.menu_aktif == "Start":
     st.markdown("""
     <div class="welcome-outer">
@@ -196,7 +203,7 @@ if st.session_state.menu_aktif == "Start":
     # Tombol Masuk Pas di bawah Kotak Utama
     _, col_btn, _ = st.columns([1.2, 1, 1.2])
     with col_btn:
-        if st.button("Masuk ke Aplikasi", key="btn_start", use_container_width=True):
+        if st.button("🌟 Masuk ke Aplikasi", key="btn_start", use_container_width=True):
             pindah_ke("Dashboard"); st.rerun()
             
     st.write("<br><br>", unsafe_allow_html=True)
@@ -205,63 +212,63 @@ if st.session_state.menu_aktif == "Start":
     col_tujuan, col_manfaat = st.columns(2)
     with col_tujuan:
         st.markdown("""
-        <div class="info-card">
-            <h4>💡 Tujuan Aplikasi</h4>
+        <div class="info-card info-card-tujuan">
+            <h4>🎨 Tujuan Aplikasi</h4>
             <ul>
-                <li>Menyediakan sistem komputasi lab terintegrasi demi akurasi perhitungan analitik.</li>
-                <li>Mempercepat konversi konsentrasi bertingkat tanpa risiko kesalahan hitung manual.</li>
+                <li>Menyediakan platform hitung laboratorium modern yang menyenangkan dan mudah dipahami.</li>
+                <li>Mencegah kekeliruan pengerjaan angka desimal berkat otomasi kalkulasi analitis.</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
         
     with col_manfaat:
         st.markdown("""
-        <div class="info-card">
+        <div class="info-card info-card-manfaat">
             <h4>✨ Manfaat Aplikasi</h4>
             <ul>
-                <li><b>Efisien:</b> Mengotomatisasi kalkulasi pengenceran sediaan ($C_1V_1 = C_2V_2$) dan stoikiometri mol.</li>
-                <li><b>Analitis:</b> Membantu penentuan pH secara akurat serta perhitungan batas ketidakpastian (galat).</li>
+                <li><b>Cepat & Efisien:</b> Memproses rumus $C_1V_1 = C_2V_2$ dan hitungan stoikiometri dalam hitungan detik.</li>
+                <li><b>Visual & Akurat:</b> Dilengkapi pelacakan rumus transparan serta alat hitung galat deviasi (SD/RSD).</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
 
-# --- HALAMAN MENU UTAMA (DASHBOARD KARTU DENGAN NAVIGASI BARU) ---
+# --- HALAMAN MENU UTAMA (DASHBOARD KARTU PASTEL) ---
 elif st.session_state.menu_aktif == "Dashboard":
-    st.markdown('<div class="badge">⚗ Kimia Analitik</div>', unsafe_allow_html=True)
+    st.markdown('<div class="badge">🌸 Kimia Analitik</div>', unsafe_allow_html=True)
     st.markdown("""
     <h1 class="main-title">Kalkulator <em>Analisis</em> Kuantitatif</h1>
-    <p class="subtitle">Silakan pilih salah satu modul kalkulator analitik kuantitatif di bawah ini:</p>
+    <p class="subtitle">Silakan pilih salah satu modul kalkulator ceria di bawah ini untuk memulai:</p>
     """, unsafe_allow_html=True)
     
     # Expander Ringkas Tujuan & Manfaat
     with st.expander("📌 Lihat Detail Tujuan & Manfaat Aplikasi", expanded=False):
         c_tj, c_mf = st.columns(2)
         with c_tj:
-            st.markdown("**🎯 Tujuan:** Memvalidasi pengerjaan preparasi sampel larutan laboratorium secara cepat.")
+            st.markdown("**🎯 Tujuan:** Memvalidasi pengerjaan preparasi sampel larutan laboratorium secara praktis.")
         with c_mf:
-            st.markdown("**✨ Manfaat:** Meminimalkan risiko kegagalan reaksi kimia akibat kesalahan perhitungan konsentrasi.")
+            st.markdown("**✨ Manfaat:** Memperkecil peluang galat hitung demi kualitas akurasi data eksperimen.")
             
     st.divider()
     
     # Baris Kartu Menu Utama
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown('<div class="menu-card"><div class="menu-icon">💧</div><div class="menu-num">01</div><div class="menu-title">Pengenceran Larutan</div><div class="menu-desc">Kalkulator pengenceran tunggal, serial/bertingkat, dan penentuan faktor pengenceran sampel.</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="menu-card card-p1"><div class="menu-icon">💧</div><div class="menu-num">01</div><div class="menu-title">Pengenceran Larutan</div><div class="menu-desc">Kalkulator pengenceran tunggal, serial/bertingkat, dan penentuan faktor pengenceran sampel.</div></div>', unsafe_allow_html=True)
         if st.button("Buka Modul 01 ➡️", key="btn_m1", use_container_width=True): pindah_ke("Pengenceran"); st.rerun()
     with col2:
-        st.markdown('<div class="menu-card"><div class="menu-icon">⇌</div><div class="menu-num">02</div><div class="menu-title">Konsentrasi & Stoikiometri</div><div class="menu-desc">Fitur konversi otomatis antar satuan kimia (M, %, ppm, ppb) dan hitung stoikiometri reaksi mol.</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="menu-card card-p2"><div class="menu-icon">🔄</div><div class="menu-num">02</div><div class="menu-title">Konsentrasi & Stoikiometri</div><div class="menu-desc">Fitur konversi otomatis antar satuan kimia (M, %, ppm, ppb) dan hitung stoikiometri reaksi mol.</div></div>', unsafe_allow_html=True)
         if st.button("Buka Modul 02 ➡️", key="btn_m2", use_container_width=True): pindah_ke("Stoikiometri"); st.rerun()
     with col3:
-        st.markdown('<div class="menu-card"><div class="menu-icon">📈</div><div class="menu-num">03</div><div class="menu-title">Kesetimbangan & pH</div><div class="menu-desc">Prediksi nilai keasaman (pH) sistem asam-basa kuat/lemah serta perhitungan nilai Ka/Kb tetapan larutan.</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="menu-card card-p3"><div class="menu-icon">🌈</div><div class="menu-num">03</div><div class="menu-title">Kesetimbangan & pH</div><div class="menu-desc">Prediksi nilai keasaman (pH) sistem asam-basa kuat/lemah serta perhitungan nilai Ka/Kb tetapan larutan.</div></div>', unsafe_allow_html=True)
         if st.button("Buka Modul 03 ➡️", key="btn_m3", use_container_width=True): pindah_ke("pH"); st.rerun()
 
     st.write("")
     col4, col5, _ = st.columns(3)
     with col4:
-        st.markdown('<div class="menu-card"><div class="menu-icon">🧪</div><div class="menu-num">04</div><div class="menu-title">Larutan Buffer</div><div class="menu-desc">Desain pembuatan sistem larutan penyangga menggunakan persamaan Henderson-Hasselbalch.</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="menu-card card-p4"><div class="menu-icon">🧪</div><div class="menu-num">04</div><div class="menu-title">Larutan Buffer</div><div class="menu-desc">Desain pembuatan sistem larutan penyangga menggunakan persamaan Henderson-Hasselbalch.</div></div>', unsafe_allow_html=True)
         if st.button("Buka Modul 04 ➡️", key="btn_m4", use_container_width=True): pindah_ke("Buffer"); st.rerun()
     with col5:
-        st.markdown('<div class="menu-card"><div class="menu-icon">±</div><div class="menu-num">05</div><div class="menu-title">Galat & Propagasi</div><div class="menu-desc">Komputasi nilai ketidakpastian sistem matematika lab, deviasi standar (SD), dan nilai RSD data.</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="menu-card card-p5"><div class="menu-icon">📊</div><div class="menu-num">05</div><div class="menu-title">Galat & Propagasi</div><div class="menu-desc">Komputasi nilai ketidakpastian sistem matematika lab, deviasi standar (SD), dan nilai RSD data.</div></div>', unsafe_allow_html=True)
         if st.button("Buka Modul 05 ➡️", key="btn_m5", use_container_width=True): pindah_ke("Galat"); st.rerun()
 
 # --- HALAMAN MODUL SELEKSI KALKULATOR KONTEN ---
@@ -320,8 +327,8 @@ else:
             if va_s >= vt_s: st.warning("Volume aliquot harus lebih kecil dari volume total.")
             else:
                 f = va_s / vt_s
-                rows = "".join(f"<tr><td style='padding:6px 10px'>{'Stok' if i==0 else f'Langkah {i}'}</td><td style='padding:6px 10px;font-family:DM Mono,monospace;color:#b06239'>{c0*(f**i):.4e}</td><td style='padding:6px 10px;color:#666'>{sat_s}</td></tr>" for i in range(int(nstep)+1))
-                st.markdown(f"""<table style="width:100%;border-collapse:collapse;border:1px solid #e0e0e0;font-size:13px;margin-top:.5rem;background:#ffffff;border-radius:10px;overflow:hidden"><thead><tr style="background:#e9e5db"><th style="padding:8px 10px;text-align:left;color:#b06239">Tabung</th><th style="padding:8px 10px;text-align:left;color:#b06239">Konsentrasi</th><th style="padding:8px 10px;text-align:left;color:#b06239">Satuan</th></tr></thead><tbody>{rows}</tbody></table>""", unsafe_allow_html=True)
+                rows = "".join(f"<tr><td style='padding:6px 10px'>{'Stok' if i==0 else f'Langkah {i}'}</td><td style='padding:6px 10px;font-family:DM Mono,monospace;color:#ff758f'>{c0*(f**i):.4e}</td><td style='padding:6px 10px;color:#666'>{sat_s}</td></tr>" for i in range(int(nstep)+1))
+                st.markdown(f"""<table style="width:100%;border-collapse:collapse;border:1px solid #ffe5ec;font-size:13px;margin-top:.5rem;background:#ffffff;border-radius:10px;overflow:hidden"><thead><tr style="background:#fff0f3"><th style="padding:8px 10px;text-align:left;color:#ff758f">Tabung</th><th style="padding:8px 10px;text-align:left;color:#ff758f">Konsentrasi</th><th style="padding:8px 10px;text-align:left;color:#ff758f">Satuan</th></tr></thead><tbody>{rows}</tbody></table>""", unsafe_allow_html=True)
         with t1c:
             col1, col2 = st.columns(2)
             with col1:
@@ -334,7 +341,7 @@ else:
 
     # MODUL 2 — STOIKIOMETRI
     elif st.session_state.menu_aktif == "Stoikiometri":
-        st.markdown("### ⇌ Satuan Konsentrasi & Stoikiometri")
+        st.markdown("### 🔄 Satuan Konsentrasi & Stoikiometri")
         t2a, t2b, t2c = st.tabs(["🔄 Konversi Satuan", "⚖️ Mol & Massa", "🧮 Stoikiometri Reaksi"])
         with t2a:
             col1, col2 = st.columns(2)
@@ -388,7 +395,7 @@ else:
 
     # MODUL 3 — pH KESETIMBANGAN
     elif st.session_state.menu_aktif == "pH":
-        st.markdown("### 📈 Kesetimbangan & Perubahan pH")
+        st.markdown("### 🌈 Kesetimbangan & Perubahan pH")
         t3a, t3b, t3c, t3d = st.tabs(["🔴 pH Asam", "🔵 pH Basa", "🔬 Hitung Ka/Kb", "📉 ΔpH Pengenceran"])
         with t3a:
             jenis_a = st.radio("Jenis asam:", ["Asam Kuat","Asam Lemah"], horizontal=True)
@@ -452,7 +459,7 @@ else:
 
     # MODUL 5 — ANALISIS GALAT
     elif st.session_state.menu_aktif == "Galat":
-        st.markdown("### ± Galat & Propagasi Error")
+        st.markdown("### 📊 Galat & Propagasi Error")
         t5a, t5b, t5c = st.tabs(["📏 Galat Absolut & Relatif", "⚡ Propagasi Error", "📊 Statistik (SD & RSD)"])
         with t5a:
             xu = st.number_input("Nilai terukur", value=9.87)
@@ -479,4 +486,4 @@ else:
 # FOOTER HALAMAN
 # ==========================================
 st.divider()
-st.markdown('<p style="text-align:center;font-size:12px;color:#ffffff;text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">⚗️ Kalkulator Analisis Kuantitatif · Kimia Analitik</p>', unsafe_allow_html=True)
+st.markdown('<p style="text-align:center;font-size:12px;color:#a29bfe;font-weight:500;">⚗️ Kalkulator Analisis Kuantitatif · Kimia Analitik</p>', unsafe_allow_html=True)
