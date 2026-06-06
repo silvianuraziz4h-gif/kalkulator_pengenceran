@@ -222,12 +222,6 @@ div.stButton > button:hover {
     width: 90%;
     z-index: 0;
 }
-</style>
-""", unsafe_allow_html=True)
-    padding-left: 1.2rem;
-    font-size: 14px;
-    color: #cfd8dc;
-    line-height: 1.6;
 }
 
 /* Style untuk Kartu Menu Utama Dashboard */
