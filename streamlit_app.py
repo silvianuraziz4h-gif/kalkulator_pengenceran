@@ -24,13 +24,13 @@ def res(label, value, unit=""):
     """
 
 # ==========================================
-# 3. GAYA CSS CUSTOM (TEMA BIRU GELAP LABORATORIUM & ELEMEN KIMIA)
+# 3. GAYA CSS CUSTOM (TEMA BIRU GELAP LABORATORIUM - FIXED TEXT COLOR)
 # ==========================================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
 
-/* Mengubah background utama aplikasi menjadi Gelap Lab / Neon Sci-Fi */
+/* Mengubah background utama aplikasi menjadi Gelap Lab */
 .stApp {
     background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%) !important;
     background-attachment: fixed;
@@ -41,9 +41,32 @@ html, body, [class*="css"] {
     font-family: 'DM Sans', sans-serif; 
 }
 
-/* Memaksa semua teks input lab, markdown, dan tombol radio bawaan Streamlit berwarna putih */
+/* Memaksa teks label di luar box tetap berwarna putih */
 .stMarkdown, p, label, .stSlider, .stRadio, div[data-baseweb="checkbox"] {
     color: #ffffff !important;
+}
+
+/* FIX: Memaksa teks di dalam INPUT BOX, SELECTBOX, dan TEXTAREA menjadi GELAP agar terbaca jelas */
+div[data-testid="stNumberInput"] input, 
+div[data-testid="stTextInput"] input, 
+div[data-testid="stTextArea"] textarea,
+div[data-baseweb="select"] div {
+    color: #1a252c !important; /* Warna abu-abu gelap mendekati hitam */
+    font-weight: 500 !important;
+}
+
+/* FIX: Mengubah teks pilihan di dalam Dropdown Menu saat diklik agar tetap gelap */
+div[data-shaded="true"], ul[role="listbox"] li {
+    color: #1a252c !important;
+}
+
+/* FIX: Menyesuaikan warna teks pada komponen Tabs (Navigasi Modul) */
+button[data-baseweb="tab"] p {
+    color: #b0bec5 !important; /* Warna teks tab yang tidak aktif */
+}
+button[data-baseweb="tab"][aria-selected="true"] p {
+    color: #00e5ff !important; /* Warna teks tab aktif (Cyan Neon) */
+    font-weight: bold !important;
 }
 
 /* Badge di atas judul */
@@ -128,6 +151,79 @@ html, body, [class*="css"] {
 }
 .info-card ul {
     margin: 0;
+    padding-left: 1.2rem;
+    font-size: 14px;
+    color: #cfd8dc;
+    line-height: 1.6;
+}
+
+/* Style untuk Kartu Menu Utama Dashboard */
+.menu-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.5rem;
+    height: 200px;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.card-p1 { border-left: 5px solid #00e5ff; }
+.card-p2 { border-left: 5px solid #00dbde; }
+.card-p3 { border-left: 5px solid #fc00ff; }
+.card-p4 { border-left: 5px solid #00ff87; }
+.card-p5 { border-left: 5px solid #ff007f; }
+
+.menu-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 229, 255, 0.2);
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.08);
+}
+.menu-icon { font-size: 24px; margin-bottom: 0.5rem; }
+.menu-title { font-size: 18px; font-weight: 500; margin-top: 0.25rem; margin-bottom: 0.5rem; color: #ffffff; }
+.menu-desc { font-size: 13px; color: #b0bec5; line-height: 1.5; }
+
+/* Custom Tombol Utama */
+div.stButton > button {
+    background: linear-gradient(135deg, #00e5ff, #00dbde) !important;
+    color: #0f2027 !important;
+    border: none !important;
+    border-radius: 25px !important;
+    padding: 0.6rem 1.5rem !important;
+    font-weight: bold !important;
+    box-shadow: 0 4px 10px rgba(0, 229, 255, 0.3) !important;
+    transition: all 0.2s;
+}
+div.stButton > button:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 15px rgba(0, 229, 255, 0.6) !important;
+    background: linear-gradient(135deg, #ffffff, #00e5ff) !important;
+}
+
+/* Style Kartu Hasil */
+.result-card { 
+    background: rgba(255, 255, 255, 0.05); border-radius:12px; padding:1rem 1.4rem; margin-top:.75rem; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); border: 1px solid rgba(0, 229, 255, 0.2); 
+}
+.result-label { font-size:11px; font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:.07em; margin:0 0 4px; color: #b0bec5; }
+.result-value { font-size:26px; font-weight:500; margin:0; font-family:'DM Mono',monospace; color: #00e5ff; }
+
+/* Menambahkan elemen rumus kimia dekoratif transparan melayang di background */
+.stApp::before {
+    content: "🧪  ⚗️  ⚛️  H₂O  CO₂  NaCl  M₁V₁=M₂V₂  pH=-log[H⁺]  🧫  NaOH  HCl";
+    position: fixed;
+    top: 15%;
+    left: 5%;
+    font-size: 4.5rem;
+    font-family: 'Courier New', monospace;
+    opacity: 0.03; 
+    white-space: pre-wrap;
+    word-spacing: 50px;
+    line-height: 2.8;
+    pointer-events: none;
+    width: 90%;
+    z-index: 0;
+}
+</style>
+""", unsafe_allow_html=True)
     padding-left: 1.2rem;
     font-size: 14px;
     color: #cfd8dc;
