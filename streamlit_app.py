@@ -1,7 +1,9 @@
 import streamlit as st
 import math
 
+# ==========================================
 # 1. PENGATURAN HALAMAN
+# ==========================================
 st.set_page_config(
     page_title="Kalkulator Analisis Kuantitatif",
     page_icon="⚗️",
@@ -9,7 +11,21 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. GAYA CSS CUSTOM (TEMA REINBOW PASTEL CERIA)
+# ==========================================
+# 2. FUNGSI UNTUK MENAMPILKAN KARTU HASIL (FIXED NAMEERROR)
+# ==========================================
+def res(label, value, unit=""):
+    """Fungsi untuk membuat komponen kartu hasil perhitungan yang estetik"""
+    return f"""
+    <div class="result-card">
+        <p class="result-label">{label}</p>
+        <p class="result-value">{value} <span style="font-size:16px; color:#4a4e69;">{unit}</span></p>
+    </div>
+    """
+
+# ==========================================
+# 3. GAYA CSS CUSTOM (TEMA REINBOW PASTEL CERIA)
+# ==========================================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
@@ -17,7 +33,6 @@ st.markdown("""
 /* Mengubah background utama aplikasi menjadi Gradasi Pastel Warna-Warni */
 .stApp {
     background: linear-gradient(135deg, #fef4f4 0%, #f1f7fe 35%, #f1fbf7 70%, #fffdf1 100%) !important;
-    /* Efek gambar latar belakang pola molekul samar */
     background-image: radial-gradient(rgba(0,0,0,0.03) 2px, transparent 2px), 
                       url('https://www.transparenttextures.com/patterns/hexabump.png');
     background-size: 30px 30px, auto;
@@ -51,9 +66,7 @@ html, body, [class*="css"] {
     font-family:'DM Mono',monospace; font-size:13px; color:#ff758f; text-align:center; margin:1rem 0; 
 }
 
-/* ==========================================
-   STYLE HALAMAN PEMBUKA (START PAGE)
-   ========================================== */
+/* STYLE HALAMAN PEMBUKA (START PAGE) */
 .welcome-outer {
     max-width: 750px;
     margin: 3rem auto 2rem;
@@ -64,7 +77,6 @@ html, body, [class*="css"] {
     border: 1px solid rgba(255,255,255,0.6);
 }
 
-/* Bagian Atas Kotak Selamat Datang (Gradasi Pink-Kuning Pastel Ceria) */
 .welcome-header {
     background: linear-gradient(135deg, #ff758f, #ff7eb3, #fec89a);
     padding: 2.5rem;
@@ -79,7 +91,6 @@ html, body, [class*="css"] {
     text-shadow: 1px 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Bagian Bawah Kotak Selamat Datang */
 .welcome-body {
     padding: 2.5rem 2rem;
     text-align: center;
@@ -137,7 +148,6 @@ html, body, [class*="css"] {
     transform: translateY(-3px);
 }
 .menu-icon { font-size: 24px; margin-bottom: 0.5rem; }
-.menu-num { font-family: 'DM Mono', monospace; font-size: 12px; color: #adb5bd; }
 .menu-title { font-size: 18px; font-weight: 500; margin-top: 0.25rem; margin-bottom: 0.5rem; color: #4a4e69; }
 .menu-desc { font-size: 13px; color: #6c757d; line-height: 1.5; }
 
@@ -158,14 +168,18 @@ div.stButton > button:hover {
 }
 
 /* Style Kartu Hasil */
-.result-card { background:#ffffff; border-radius:12px; padding:1rem 1.4rem; margin-top:.75rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid #ffe5ec; }
+.result-card { 
+    background:#ffffff; border-radius:12px; padding:1rem 1.4rem; margin-top:.75rem; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid #ffe5ec; 
+}
 .result-label { font-size:11px; font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:.07em; margin:0 0 4px; color: #9a8c98; }
 .result-value { font-size:26px; font-weight:500; margin:0; font-family:'DM Mono',monospace; color: #ff758f; }
-.step-box { background:#ffffff; border:1px solid #e0e0e0; border-radius:8px; padding:10px 14px; margin-top:8px; font-size:12.5px; color:#555; font-family:'DM Mono',monospace; line-height:1.9; }
 </style>
 """, unsafe_allow_html=True)
 
-# 3. STATE MANAGEMENT NAVIGASI
+# ==========================================
+# 4. STATE MANAGEMENT NAVIGASI
+# ==========================================
 if 'menu_aktif' not in st.session_state:
     st.session_state.menu_aktif = "Start"
 
@@ -184,10 +198,10 @@ def from_mgL(mgL, sat, mr, rho=1.0):
 
 
 # ==========================================
-# HALAMAN ISI KONTEN
+# 5. HALAMAN ISI KONTEN
 # ==========================================
 
-# --- HALAMAN PEMBUKA (START PAGE BERWARNA RAINBOW PASTEL) ---
+# --- HALAMAN PEMBUKA (START PAGE) ---
 if st.session_state.menu_aktif == "Start":
     st.markdown("""
     <div class="welcome-outer">
@@ -200,15 +214,14 @@ if st.session_state.menu_aktif == "Start":
     </div>
     """, unsafe_allow_html=True)
     
-    # Tombol Masuk Pas di bawah Kotak Utama
     _, col_btn, _ = st.columns([1.2, 1, 1.2])
     with col_btn:
         if st.button("🌟 Masuk ke Aplikasi", key="btn_start", use_container_width=True):
-            pindah_ke("Dashboard"); st.rerun()
+            pindah_ke("Dashboard")
+            st.rerun()
             
     st.write("<br><br>", unsafe_allow_html=True)
     
-    # Grid Informasi Tujuan & Manfaat di paling bawah halaman start
     col_tujuan, col_manfaat = st.columns(2)
     with col_tujuan:
         st.markdown("""
@@ -216,7 +229,7 @@ if st.session_state.menu_aktif == "Start":
             <h4>🎨 Tujuan Aplikasi</h4>
             <ul>
                 <li>Menyediakan platform hitung laboratorium modern yang menyenangkan dan mudah dipahami.</li>
-                <li>Mencegah kekeliruan pengerjaan angka desimal berkat otomasi kalkulasi analitis.</li>
+                <li>Mengecek kekeliruan pengerjaan angka desimal berkat otomasi kalkulasi analitis.</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
@@ -232,49 +245,50 @@ if st.session_state.menu_aktif == "Start":
         </div>
         """, unsafe_allow_html=True)
 
-# --- HALAMAN MENU UTAMA (DASHBOARD KARTU PASTEL) ---
+# --- HALAMAN MENU UTAMA (DASHBOARD KARTU) ---
 elif st.session_state.menu_aktif == "Dashboard":
     st.markdown('<div class="badge">🌸 Kimia Analitik</div>', unsafe_allow_html=True)
     st.markdown("""
     <h1 class="main-title">Kalkulator <em>Analisis</em> Kuantitatif</h1>
     <p class="subtitle">Silakan pilih salah satu modul kalkulator ceria di bawah ini untuk memulai:</p>
     """, unsafe_allow_html=True)
-    
-    # Expander Ringkas Tujuan & Manfaat
-    with st.expander("📌 Lihat Detail Tujuan & Manfaat Aplikasi", expanded=False):
-        c_tj, c_mf = st.columns(2)
-        with c_tj:
-            st.markdown("**🎯 Tujuan:** Memvalidasi pengerjaan preparasi sampel larutan laboratorium secara praktis.")
-        with c_mf:
-            st.markdown("**✨ Manfaat:** Memperkecil peluang galat hitung demi kualitas akurasi data eksperimen.")
-            
     st.divider()
     
-    # Baris Kartu Menu Utama
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown('<div class="menu-card card-p1"><div class="menu-icon">💧</div><div class="menu-num">01</div><div class="menu-title">Pengenceran Larutan</div><div class="menu-desc">Kalkulator pengenceran tunggal, serial/bertingkat, dan penentuan faktor pengenceran sampel.</div></div>', unsafe_allow_html=True)
-        if st.button("Buka Modul 01 ➡️", key="btn_m1", use_container_width=True): pindah_ke("Pengenceran"); st.rerun()
+        st.markdown('<div class="menu-card card-p1"><div class="menu-icon">💧</div><div class="menu-title">Pengenceran Larutan</div><div class="menu-desc">Kalkulator pengenceran tunggal, serial/bertingkat, dan penentuan faktor pengenceran sampel.</div></div>', unsafe_allow_html=True)
+        if st.button("Buka Modul 01 ➡️", key="btn_m1", use_container_width=True): 
+            pindah_ke("Pengenceran")
+            st.rerun()
     with col2:
-        st.markdown('<div class="menu-card card-p2"><div class="menu-icon">🔄</div><div class="menu-num">02</div><div class="menu-title">Konsentrasi & Stoikiometri</div><div class="menu-desc">Fitur konversi otomatis antar satuan kimia (M, %, ppm, ppb) dan hitung stoikiometri reaksi mol.</div></div>', unsafe_allow_html=True)
-        if st.button("Buka Modul 02 ➡️", key="btn_m2", use_container_width=True): pindah_ke("Stoikiometri"); st.rerun()
+        st.markdown('<div class="menu-card card-p2"><div class="menu-icon">🔄</div><div class="menu-title">Konsentrasi & Stoikiometri</div><div class="menu-desc">Fitur konversi otomatis antar satuan kimia (M, %, ppm, ppb) dan hitung stoikiometri reaksi mol.</div></div>', unsafe_allow_html=True)
+        if st.button("Buka Modul 02 ➡️", key="btn_m2", use_container_width=True): 
+            pindah_ke("Stoikiometri")
+            st.rerun()
     with col3:
-        st.markdown('<div class="menu-card card-p3"><div class="menu-icon">🌈</div><div class="menu-num">03</div><div class="menu-title">Kesetimbangan & pH</div><div class="menu-desc">Prediksi nilai keasaman (pH) sistem asam-basa kuat/lemah serta perhitungan nilai Ka/Kb tetapan larutan.</div></div>', unsafe_allow_html=True)
-        if st.button("Buka Modul 03 ➡️", key="btn_m3", use_container_width=True): pindah_ke("pH"); st.rerun()
+        st.markdown('<div class="menu-card card-p3"><div class="menu-icon">🌈</div><div class="menu-title">Kesetimbangan & pH</div><div class="menu-desc">Prediksi nilai keasaman (pH) sistem asam-basa kuat/lemah serta perhitungan nilai Ka/Kb tetapan larutan.</div></div>', unsafe_allow_html=True)
+        if st.button("Buka Modul 03 ➡️", key="btn_m3", use_container_width=True): 
+            pindah_ke("pH")
+            st.rerun()
 
     st.write("")
     col4, col5, _ = st.columns(3)
     with col4:
-        st.markdown('<div class="menu-card card-p4"><div class="menu-icon">🧪</div><div class="menu-num">04</div><div class="menu-title">Larutan Buffer</div><div class="menu-desc">Desain pembuatan sistem larutan penyangga menggunakan persamaan Henderson-Hasselbalch.</div></div>', unsafe_allow_html=True)
-        if st.button("Buka Modul 04 ➡️", key="btn_m4", use_container_width=True): pindah_ke("Buffer"); st.rerun()
+        st.markdown('<div class="menu-card card-p4"><div class="menu-icon">🧪</div><div class="menu-title">Larutan Buffer</div><div class="menu-desc">Desain pembuatan sistem larutan penyangga menggunakan persamaan Henderson-Hasselbalch.</div></div>', unsafe_allow_html=True)
+        if st.button("Buka Modul 04 ➡️", key="btn_m4", use_container_width=True): 
+            pindah_ke("Buffer")
+            st.rerun()
     with col5:
-        st.markdown('<div class="menu-card card-p5"><div class="menu-icon">📊</div><div class="menu-num">05</div><div class="menu-title">Galat & Propagasi</div><div class="menu-desc">Komputasi nilai ketidakpastian sistem matematika lab, deviasi standar (SD), dan nilai RSD data.</div></div>', unsafe_allow_html=True)
-        if st.button("Buka Modul 05 ➡️", key="btn_m5", use_container_width=True): pindah_ke("Galat"); st.rerun()
+        st.markdown('<div class="menu-card card-p5"><div class="menu-icon">📊</div><div class="menu-title">Galat & Propagasi</div><div class="menu-desc">Komputasi nilai ketidakpastian sistem matematika lab, deviasi standar (SD), dan nilai RSD data.</div></div>', unsafe_allow_html=True)
+        if st.button("Buka Modul 05 ➡️", key="btn_m5", use_container_width=True): 
+            pindah_ke("Galat")
+            st.rerun()
 
-# --- HALAMAN MODUL SELEKSI KALKULATOR KONTEN ---
+# --- HALAMAN MODUL KALKULATOR AKTIF ---
 else:
     if st.button("⬅️ Kembali ke Menu Utama", key="btn_kembali"):
-        pindah_ke("Dashboard"); st.rerun()
+        pindah_ke("Dashboard")
+        st.rerun()
     st.divider()
 
     # MODUL 1 — PENGENCERAN
@@ -282,7 +296,7 @@ else:
         st.markdown("### 💧 Pengenceran Larutan")
         t1a, t1b, t1c = st.tabs(["C₁V₁ = C₂V₂", "Serial / Bertingkat", "Faktor Pengenceran"])
         with t1a:
-            st.markdown("""<div class="formula-box">C₁ × V₁ = C₂ × V₂</div>""", unsafe_allow_html=True)
+            st.markdown('<div class="formula-box">C₁ × V₁ = C₂ × V₂</div>', unsafe_allow_html=True)
             cari = st.selectbox("Variabel yang dicari:", ["C₂ — Konsentrasi akhir","V₂ — Volume akhir","C₁ — Konsentrasi awal","V₁ — Volume awal"], key="e_cari")
             satuan = st.selectbox("Satuan konsentrasi:", ["M","mM","µM","mg/mL","ppm","ppb"], key="e_sat")
             col1, col2 = st.columns(2)
@@ -315,7 +329,7 @@ else:
                 hasil = (c2*v2)/c1
                 st.markdown(res("V₁ — Volume awal", f"{hasil:.5g}", "mL"), unsafe_allow_html=True)
         with t1b:
-            st.markdown("""<div class="formula-box">C₢ = C₀ × (V_aliquot / V_total)ⁿ</div>""", unsafe_allow_html=True)
+            st.markdown('<div class="formula-box">C₢ = C₀ × (V_aliquot / V_total)ⁿ</div>', unsafe_allow_html=True)
             col1, col2 = st.columns(2)
             with col1:
                 c0 = st.number_input("C₀ — Konsentrasi stok", 0.0, value=1.0, format="%.5f", key="s_c0")
@@ -481,9 +495,8 @@ else:
                 sd_s = math.sqrt(sum((xi-mean_s)**2 for xi in arr)/(len(arr)-1))
                 st.markdown(res("Rata-rata ± SD", f"{mean_s:.4g} ± {sd_s:.4g}", f"(RSD: {sd_s/mean_s*100:.3f}%)"), unsafe_allow_html=True)
 
-
 # ==========================================
-# FOOTER HALAMAN
+# 6. FOOTER HALAMAN
 # ==========================================
 st.divider()
 st.markdown('<p style="text-align:center;font-size:12px;color:#a29bfe;font-weight:500;">⚗️ Kalkulator Analisis Kuantitatif · Kimia Analitik</p>', unsafe_allow_html=True)
