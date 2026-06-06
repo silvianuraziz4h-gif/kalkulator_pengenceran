@@ -43,15 +43,38 @@ html, body, [class*="css"] {
 /* Style untuk Start Page & Welcome Screen */
 .welcome-container {
     text-align: center;
-    padding: 5rem 2rem;
+    padding: 3rem 2rem 1.5rem;
     background: #fafbfc;
     border: 1px solid #e8e8e8;
     border-radius: 20px;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
-.welcome-icon { font-size: 60px; margin-bottom: 1rem; }
-.welcome-title { font-family: 'DM Serif Display', serif; font-size: 46px; color: #1a1a1a; margin-bottom: 1rem; }
-.welcome-desc { font-size: 16px; color: #555; max-width: 600px; margin: 0 auto 2rem; line-height: 1.6; }
+.welcome-icon { font-size: 60px; margin-bottom: 0.5rem; }
+.welcome-title { font-family: 'DM Serif Display', serif; font-size: 46px; color: #1a1a1a; margin-bottom: 0.5rem; }
+.welcome-desc { font-size: 16px; color: #555; max-width: 700px; margin: 0 auto 1rem; line-height: 1.6; }
+
+/* Info Box untuk Tujuan & Manfaat di Start Page */
+.info-block {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: left;
+    height: 100%;
+}
+.info-block h4 {
+    margin-top: 0;
+    color: #1D9E75;
+    font-size: 18px;
+    margin-bottom: 0.5rem;
+}
+.info-block ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+}
 
 /* Style untuk Kartu Menu Utama */
 .menu-card {
@@ -87,7 +110,6 @@ html, body, [class*="css"] {
 """, unsafe_allow_html=True)
 
 # 3. STATE MANAGEMENT NAVIGASI
-# Menggunakan "Start" sebagai halaman pembuka awal aplikasi
 if 'menu_aktif' not in st.session_state:
     st.session_state.menu_aktif = "Start"
 
@@ -145,19 +167,42 @@ if st.session_state.menu_aktif == "Start":
         <div class="welcome-icon">⚗️</div>
         <div class="welcome-title">Selamat Datang</div>
         <p class="welcome-desc">
-            Aplikasi interaktif terintegrasi untuk Laboratorium Kimia Analitik. 
-            Membantu Anda mempercepat kalkulasi pengenceran larutan, stoikiometri, 
-            perhitungan pH, pembuatan larutan buffer, hingga analisis ketidakpastian galat.
+            Aplikasi interaktif terintegrasi untuk Laboratorium Kimia Analitik Kuantitatif.
         </p>
     </div>
     """, unsafe_allow_html=True)
     
+    # Menambahkan Tujuan & Manfaat berdampingan di halaman Start
+    st.write("")
+    col_tujuan, col_manfaat = st.columns(2)
+    with col_tujuan:
+        st.markdown("""
+        <div class="info-block">
+            <h4>🎯 Tujuan Aplikasi</h4>
+            <ul>
+                <li>Menyediakan platform komputasi kimia analitik yang cepat, presisi, dan bebas dari risiko <i>human error</i> saat kalkulasi manual.</li>
+                <li>Menyederhanakan alur kerja laboratorium dari persiapan sampel hingga analisis data akhir dalam satu tempat.</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        
+    with col_manfaat:
+        st.markdown("""
+        <div class="info-block">
+            <h4>✨ Manfaat Aplikasi</h4>
+            <ul>
+                <li><b>Efisiensi Waktu:</b> Mempercepat proses pembuatan larutan kerja dan perhitungan stoikiometri reaksi secara instan.</li>
+                <li><b>Akurasi Tinggi:</b> Dilengkapi dengan fitur pelacakan langkah perhitungan dan analisis perambatan galat ketidakpastian data.</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.write("")
     # Tombol besar di tengah halaman pembuka
     _, col_btn, _ = st.columns([1, 1, 1])
     with col_btn:
         if st.button("🚀 MASUK KE APLIKASI", key="btn_start", use_container_width=True):
-            pindah_ke("Dashboard")
-            st.rerun()
+            pindah_ke("Dashboard"); st.rerun()
 
 # --- HALAMAN MENU UTAMA (DASHBOARD KARTU) ---
 elif st.session_state.menu_aktif == "Dashboard":
@@ -166,6 +211,17 @@ elif st.session_state.menu_aktif == "Dashboard":
     <h1 class="main-title">Kalkulator <em>Analisis</em> Kuantitatif</h1>
     <p class="subtitle">Alat perhitungan terintegrasi untuk kimia analitik. Klik pada modul di bawah untuk mulai menghitung.</p>
     """, unsafe_allow_html=True)
+    
+    # Menggunakan st.expander untuk informasi Tujuan & Manfaat sebelum barisan menu kalkulator
+    with st.expander("📌 Lihat Informasi Tujuan & Manfaat Aplikasi", expanded=False):
+        col_tuj_dash, col_man_dash = st.columns(2)
+        with col_tuj_dash:
+            st.markdown("##### 🎯 Tujuan")
+            st.info("Membantu praktikan, laboran, dan peneliti dalam melakukan validasi perhitungan kimia analitik kuantitatif secara cepat dan akurat demi meminimalkan kesalahan preparasi sampel.")
+        with col_man_dash:
+            st.markdown("##### ✨ Manfaat")
+            st.success("Menghemat waktu pengerjaan analisis di lab, mempermudah penentuan rasio buffer/pH, serta membantu pengolahan data statistik berbasis ketidakpastian (galat) secara otomatis.")
+            
     st.divider()
     
     st.write("##### MODUL TERSEDIA — 5 TOPIK")
