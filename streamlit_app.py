@@ -274,7 +274,7 @@ if st.session_state.menu_aktif == "Start":
         <div class="info-card info-card-manfaat">
             <h4>✨ Manfaat Aplikasi</h4>
             <ul>
-                <li><b>Cepat & Efisien:</b> Memproses rumus $C_1V_1 = C_2V_2$ dan hitungan stoikiometri dalam hitungan detik.</li>
+                <li><b>Cepat & Efisien:</b> Memproses rumus C1V1=V2C2 dan hitungan stoikiometri dalam hitungan detik.</li>
                 <li><b>Visual & Akurat:</b> Dilengkapi pelacakan rumus transparan serta alat hitung galat deviasi (SD/RSD).</li>
             </ul>
         </div>
@@ -282,7 +282,7 @@ if st.session_state.menu_aktif == "Start":
 
 # --- HALAMAN MENU UTAMA (DASHBOARD KARTU) ---
 elif st.session_state.menu_aktif == "Dashboard":
-    st.markdown('<div class="badge">🌸 Kimia Analitik</div>', unsafe_allow_html=True)
+    st.markdown('<div class="badge">🧪Kimia Analitik</div>', unsafe_allow_html=True)
     st.markdown("""
     <h1 class="main-title">Kalkulator <em>Analisis</em> Kuantitatif</h1>
     <p class="subtitle">Silakan pilih salah satu modul kalkulator ceria di bawah ini untuk memulai:</p>
