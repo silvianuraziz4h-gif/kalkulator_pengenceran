@@ -214,7 +214,6 @@ if st.session_state.menu_aktif == "Start":
         <div class="welcome-body">
             <p class="welcome-desc">Aplikasi Kalkulator Kimia Analitik Kuantitatif</p>
         </div>
-        https://github.com/silvianuraziz4h-gif/kalkulator_pengenceran/issues/2#issue-4606548015
     </div>
     """, unsafe_allow_html=True)
 
