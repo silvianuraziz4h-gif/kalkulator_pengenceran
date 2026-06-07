@@ -204,9 +204,7 @@ def tampilkan_hasil(nama_variabel, angka, satuan=""):
     )
 
 
-# =============================================================
 # HALAMAN START
-# =============================================================
 if st.session_state.menu_aktif == "Start":
     st.markdown("""
     <div class="welcome-outer">
@@ -249,10 +247,7 @@ if st.session_state.menu_aktif == "Start":
             </ul>
         </div>""", unsafe_allow_html=True)
 
-
-# =============================================================
 # DASHBOARD 
-# =============================================================
 elif st.session_state.menu_aktif == "Dashboard":
     st.markdown('<div class="badge">🧪 Kimia Analitik</div>', unsafe_allow_html=True)
     st.markdown("""
@@ -314,18 +309,14 @@ elif st.session_state.menu_aktif == "Dashboard":
                 st.rerun()
 
 
-# =============================================================
 # MODUL-MODUL 
-# =============================================================
 else:
     if st.button("← Kembali ke Menu Utama", key="btn_back"):
         st.session_state.menu_aktif = "Dashboard"
         st.rerun()
     st.divider()
 
-    # ----------------------------------------------------------
     # PENGENCERAN
-    # ----------------------------------------------------------
     if st.session_state.menu_aktif == "Pengenceran":
         st.markdown("### 💧 Pengenceran Larutan")
         tab_cv, tab_serial, tab_fp = st.tabs(["C₁V₁ = C₂V₂", "Serial / Bertingkat", "Faktor Pengenceran"])
@@ -428,9 +419,7 @@ else:
                 buat_baris(f"C akhir = {ca_fp} / {fp:.4f} = <b>{ca_fp / fp:.5g}</b>")
             ), unsafe_allow_html=True)
 
-    # ----------------------------------------------------------
     # STOIKIOMETRI
-    # ----------------------------------------------------------
     elif st.session_state.menu_aktif == "Stoikiometri":
         st.markdown("### 🔄 Satuan Konsentrasi & Stoikiometri")
         tab_konv, tab_mol, tab_reaksi = st.tabs(["🔄 Konversi Satuan", "⚖️ Mol & Massa", "🧮 Stoikiometri Reaksi"])
@@ -559,9 +548,7 @@ else:
                 buat_baris(f"Massa {nC} = {mol_C:.5g} × {mC} = <b>{mol_C * mC:.5g} gram</b>")
             ), unsafe_allow_html=True)
 
-    # ----------------------------------------------------------
     # pH & KESETIMBANGAN
-    # ----------------------------------------------------------
     elif st.session_state.menu_aktif == "pH":
         st.markdown("### 🌈 Kesetimbangan & Perubahan pH")
         tab_asam, tab_basa, tab_ka, tab_dilusi = st.tabs([
@@ -648,9 +635,7 @@ else:
                 buat_baris(f"ΔpH = <b>{delta_pH:.4f}</b>")
             ), unsafe_allow_html=True)
 
-    # ----------------------------------------------------------
     # BUFFER
-    # ----------------------------------------------------------
     elif st.session_state.menu_aktif == "Buffer":
         st.markdown("### 🧪 Pembuatan Larutan Buffer")
         tab_ph, tab_rasio, tab_beta = st.tabs([
@@ -695,9 +680,7 @@ else:
                 buat_baris(f"β = <b>{beta:.4e}</b>")
             ), unsafe_allow_html=True)
 
-    # ----------------------------------------------------------
     # GALAT & PROPAGASI ERROR
-    # ----------------------------------------------------------
     elif st.session_state.menu_aktif == "Galat":
         st.markdown("### 📊 Galat & Propagasi Error")
         tab_ga, tab_prop, tab_stat = st.tabs([
