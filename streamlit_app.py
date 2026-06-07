@@ -1,4 +1,4 @@
-import streamlit as st
+ import streamlit as st
 import math
 
 # setup halaman
@@ -212,9 +212,12 @@ if st.session_state.menu_aktif == "Start":
     <div class="welcome-outer">
         <div class="welcome-header"><h1>Selamat Datang👋</h1></div>
         <div class="welcome-body">
-            <p class="welcome-desc">Aplikasi Kalkulator Kimia Analitik Kuantitatif</p>
+            <p class="welcome-desc" style="margin-bottom: 25px;">Aplikasi Kalkulator Kimia Analitik Kuantitatif</p>
+
+            <img src="https://github.com/user-attachments/assets/aedf2a09-6d2a-4a2d-9bb0-e91f1a0282b1"
+            width="180"
+            style="display: block; margin: 0 auto; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
         </div> 
-        <img width="1024" height="1024" alt="Image" src="https://github.com/user-attachments/assets/aedf2a09-6d2a-4a2d-9bb0-e91f1a0282b1" />
     </div>
     """, unsafe_allow_html=True)
 
