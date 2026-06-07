@@ -215,7 +215,7 @@ if st.session_state.menu_aktif == "Start":
         </div>
         <div class="welcome-body">
             <p class="welcome-desc" style="margin-bottom: 25px;">Aplikasi Kalkulator Kimia Analitik Kuantitatif</p>
-            <img src="https://github.com/user-attachments/assets/cca6ce62-730a-4d78-a58c-2c0e326c2177"
+            <img src="https://github.com/user-attachments/assets/33c8c3d4-cac9-482f-883d-0bf8a00563e3"
                  width="180"
                  style="display: block; margin:0 auto; border-radius: 50%; box shadow: 0 4px 10px rgba(0,0,0,0,3);">
         </div> 
