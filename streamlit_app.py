@@ -213,7 +213,8 @@ if st.session_state.menu_aktif == "Start":
         <div class="welcome-header"><h1>Selamat Datang👋</h1></div>
         <div class="welcome-body">
             <p class="welcome-desc">Aplikasi Kalkulator Kimia Analitik Kuantitatif</p>
-        </div>
+        </div> 
+        <img width="1024" height="1024" alt="Image" src="https://github.com/user-attachments/assets/aedf2a09-6d2a-4a2d-9bb0-e91f1a0282b1" />
     </div>
     """, unsafe_allow_html=True)
 
