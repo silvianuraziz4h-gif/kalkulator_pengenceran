@@ -463,11 +463,11 @@ def tampilkan_identitas():
     <div class="identitas-box">
         <div class="identitas-title">👥 Kelompok 13</div>
         <div class="identitas-divider"></div>
-        <div class="identitas-name">1. &nbsp; Evan Ardra prayoga (2560620)</div>
+        <div class="identitas-name">1. &nbsp; Evan Ardra Prayoga (2560620)</div>
         <div class="identitas-name">2. &nbsp; Kartika (2560653)</div>
         <div class="identitas-name">3. &nbsp; Mazhani Putri Maulana	(2560670)</div>
         <div class="identitas-name">4. &nbsp; Selfi Novianti (2560775)</div>
-        <div class="identitas-name">4. &nbsp; Silvia Nurazizah (2560780)</div>
+        <div class="identitas-name">5. &nbsp; Silvia Nurazizah (2560780)</div>
     </div>
     """, unsafe_allow_html=True)
 
