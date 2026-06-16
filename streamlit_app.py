@@ -9,9 +9,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# ============================================================
-# DATA: SELURUH UNSUR TABEL PERIODIK (Mr standar)
-# ============================================================
+# DATA
 TABEL_PERIODIK = {
     "H – Hidrogen":      1.008,
     "He – Helium":       4.003,
@@ -133,9 +131,9 @@ TABEL_PERIODIK = {
     "Og – Oganesson":  294.000,
 }
 
-# Mr senyawa umum + unsur (dropdown otomatis)
+# Mr senyawa umum + unsur
 MR_SENYAWA = {
-    # === Senyawa Asam ===
+    # Asam
     "HCl – Asam klorida":              36.46,
     "HNO₃ – Asam nitrat":              63.01,
     "H₂SO₄ – Asam sulfat":             98.08,
@@ -152,7 +150,7 @@ MR_SENYAWA = {
     "H₂C₂O₄ – Asam oksalat":            90.03,
     "HCOOH – Asam format":               46.03,
     "C₆H₅COOH – Asam benzoat":         122.12,
-    # === Basa ===
+    # Basa
     "NaOH – Natrium hidroksida":         40.00,
     "KOH – Kalium hidroksida":           56.11,
     "Ca(OH)₂ – Kalsium hidroksida":      74.09,
@@ -161,7 +159,7 @@ MR_SENYAWA = {
     "NH₃ – Amonia":                      17.03,
     "NH₄OH – Amonium hidroksida":        35.05,
     "Ba(OH)₂ – Barium hidroksida":      171.34,
-    # === Garam ===
+    # Garam
     "NaCl – Natrium klorida":            58.44,
     "KCl – Kalium klorida":              74.55,
     "NaHCO₃ – Natrium bikarbonat":       84.01,
@@ -197,7 +195,7 @@ MR_SENYAWA = {
     "KH₂PO₄ – Kalium dihidrogen fosfat": 136.09,
     "CH₃COONa – Natrium asetat":         82.03,
     "CH₃COONH₄ – Amonium asetat":        77.08,
-    # === Oksida ===
+    # Oksida
     "H₂O – Air":                         18.02,
     "CO₂ – Karbon dioksida":             44.01,
     "CO – Karbon monoksida":              28.01,
@@ -217,7 +215,7 @@ MR_SENYAWA = {
     "CaO – Kalsium oksida":                56.08,
     "Na₂O – Natrium oksida":               61.98,
     "K₂O – Kalium oksida":                 94.20,
-    # === Organik ===
+    # Organik
     "C₆H₁₂O₆ – Glukosa":               180.16,
     "C₁₂H₂₂O₁₁ – Sukrosa":             342.30,
     "C₂H₅OH – Etanol":                    46.07,
@@ -240,7 +238,7 @@ MR_DROPDOWN = {**MR_SENYAWA, **{k: v for k, v in TABEL_PERIODIK.items() if k not
 
 # Keterangan istilah kimia
 KETERANGAN_ISTILAH = {
-    "Mr": "Mr (Massa Relatif / Berat Molekul) — Massa rata-rata satu molekul zat dibandingkan 1/12 massa atom karbon-12. Satuan: g/mol.",
+    "Mr": "Mr (Massa Relatif / Berat Molekul)** — Massa rata-rata satu molekul zat dibandingkan 1/12 massa atom karbon-12. Satuan: g/mol.",
     "Molaritas": "Molaritas (M) — Jumlah mol zat terlarut per liter larutan. Rumus: M = n/V(L). Satuan: mol/L.",
     "Molalitas": "Molalitas (m) — Jumlah mol zat terlarut per kilogram pelarut. Satuan: mol/kg.",
     "ppm": "ppm (parts per million) — Konsentrasi 1 mg zat dalam 1 liter larutan (setara mg/L). Umum digunakan untuk larutan sangat encer.",
@@ -459,9 +457,7 @@ div.stButton > button:hover { opacity:0.85; }
 """, unsafe_allow_html=True)
 
 
-# ============================================================
 # KOMPONEN IDENTITAS TIM
-# ============================================================
 def tampilkan_identitas():
     st.markdown("""
     <div class="identitas-box">
@@ -476,18 +472,14 @@ def tampilkan_identitas():
     """, unsafe_allow_html=True)
 
 
-# ============================================================
 # KOMPONEN KETERANGAN ISTILAH
-# ============================================================
 def keterangan(kunci):
     teks = KETERANGAN_ISTILAH.get(kunci, "")
     if teks:
         st.markdown(f'<div class="istilah-box">ℹ️ {teks}</div>', unsafe_allow_html=True)
 
 
-# ============================================================
 # FUNGSI TAMPILAN UMUM
-# ============================================================
 def tampilkan_kotak(judul, konten_html):
     return f"""
     <div style="background:rgba(30,55,100,0.35); padding:20px; border-radius:10px;
@@ -559,18 +551,14 @@ st.markdown("""
 </script>
 """, unsafe_allow_html=True)
 
-# ============================================================
 # SESSION STATE
-# ============================================================
 if 'menu_aktif' not in st.session_state:
     st.session_state.menu_aktif = "Start"
 
 SATUAN_KONSENTRASI = ["Molaritas (M)", "% massa/volume (% m/v)", "ppm (mg/L)", "ppb (µg/L)", "mg/mL", "Molalitas (m)"]
 
 
-# =============================================================
 # HALAMAN START
-# =============================================================
 if st.session_state.menu_aktif == "Start":
     st.markdown("""
     <div class="welcome-outer">
@@ -616,9 +604,7 @@ if st.session_state.menu_aktif == "Start":
         </div>""", unsafe_allow_html=True)
 
 
-# =============================================================
 # DASHBOARD
-# =============================================================
 elif st.session_state.menu_aktif == "Dashboard":
     st.markdown('<div class="badge">🧪 Kimia Analitik</div>', unsafe_allow_html=True)
     st.markdown("""
@@ -678,9 +664,7 @@ elif st.session_state.menu_aktif == "Dashboard":
                 st.rerun()
 
 
-# =============================================================
 # MODUL-MODUL
-# =============================================================
 else:
     if st.button("← Kembali ke Menu Utama", key="btn_back"):
         st.session_state.menu_aktif = "Dashboard"
@@ -1548,6 +1532,6 @@ else:
 
 st.divider()
 st.markdown(
-    '<p style="text-align:center; font-size:12px; color:#9e9e9e;">⚗️ Kalkulator Analisis Kuantitatif · Kimia Analitik · Anisa · Rahma · Wewing · Abum</p>',
+    '<p style="text-align:center; font-size:12px; color:#9e9e9e;">⚗️ Kalkulator Analisis Kuantitatif</p>',
     unsafe_allow_html=True
 )
